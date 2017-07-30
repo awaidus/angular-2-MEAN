@@ -6,7 +6,7 @@ var Todo = require('../models/todo');
 router.get('/', function (req, res, next) {
     Todo.getTodos(function (error, todos) {
         if (error) {
-            throw  error;
+            res.json(error);
         } else {
             res.json(todos);
         }
@@ -17,7 +17,7 @@ router.get('/:id', function (req, res, next) {
     var id = req.params.id;
     Todo.getTodo(id, function (error, todo) {
         if (error) {
-            throw  error;
+            res.json(error);
         } else {
             res.json(todo);
         }
