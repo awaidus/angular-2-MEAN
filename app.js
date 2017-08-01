@@ -41,12 +41,13 @@ app.use(express.static(path.join(__dirname, 'public/client/dist')));
 
 
 //routing
+app.use('/auth', authentication);
 
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + 'public/client/dist/index.html'));
 });
 
-app.use('/auth', authentication);
+
 app.use('/', index);
 app.use('/', todos);
 app.use('/users', users);

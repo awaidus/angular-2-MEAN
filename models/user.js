@@ -6,7 +6,7 @@ var usernameLengthChecker = function (username) {
     if (!username)
         return false;
     else {
-        if (username.length < 5 || username.length > 30) {
+        if (username.length < 5 || username.length > 15) {
             return false
         } else {
             const regExp = new RegExp(/^[a-zA-Z0-9]+$/);
@@ -17,7 +17,7 @@ var usernameLengthChecker = function (username) {
 
 const usernameValidator = [{
     validator: usernameLengthChecker,
-    message: 'Username must be between 5 to 30 character long and must not have any special characters'
+    message: 'Username must be between 5 to 10 character long and must not have any special characters'
 }];
 
 var userSchema = new Schema({
@@ -28,17 +28,16 @@ var userSchema = new Schema({
 });
 
 
-// Schema Middleware to Encrypt Password
+// Middleware for encrypt password
 userSchema.pre('save', function (next) {
-    // Ensure password is new or modified before applying encryption
+    // Ensure password is new / modified before applying encryption
     if (!this.isModified('password'))
         return next();
-
     // Apply encryption
     bcrypt.hash(this.password, null, null, function (err, hash) {
-        if (err) return next(err); // Ensure no errors
-        this.password = hash; // Apply encryption to password
-        next(); // Exit middleware
+        if (err) return next(err); 
+        this.password = hash; // encryption password
+        next();
     });
 });
 
